@@ -55,7 +55,11 @@ class PublicationController extends Controller
         $publication->slug = Str::slug($publication->name);
         $publication->creator = Auth::user()->id;
         $publication->save();
-        return 'success';
+        //return 'success';
+        return response()->json([
+            'html' => "<option value='".$publication->id."'>".$publication->name."</option>",
+            'value' => $publication->id,
+        ]);
     }
 
     /**

@@ -49,6 +49,11 @@ class StatusController extends Controller
         $status->creator = Auth::user()->id;
         $status->save();
 
+        // return response()->json([
+        //     'html' => "<option value='".$status->id."'>".$status->name."</option>",
+        //     'value' => $status->id,
+        // ]);
+
         return redirect()->route('status.index')->with('success', 'status created successfully');
     }
 

@@ -96,7 +96,7 @@ Route::group([
 ], function () {
 
     Route::resource('product',ProductController::class);
-    Route::resource('writer',WriterControlller::class);
+    Route::resource('writer',WriterControlller::class); 
     Route::resource('publication',PublicationController::class);
     Route::resource('vendor',VendorController::class);
 
@@ -117,5 +117,8 @@ Route::group([
     Route::get('/get-all-cateogory-selected-by-main-category/{main_category_id}', [CategoryController::class,'get_category_by_main_category'])->name('get_all_category_selected_by_main_category');
     
     Route::get('/get-all-sub-category-selected-by-category/{category_id}', [CategoryController::class,'get_sub_category_by_category'])->name('get-all-sub-category-selected-by-category');
+
+    Route::get('/get-all-main-category-josn', [MainCategoryController::class,'get_main_category_json'])->name('get_main_category_json');
+    Route::get('/get-all-category-josn', [CategoryController::class,'get_category_json'])->name('get_category_json');
    
 });

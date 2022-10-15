@@ -57,8 +57,12 @@ class BrandController extends Controller
         $brand->creator = Auth::user()->id;
         $brand->save();
 
-        // return redirect()->back()->with('success', 'Brand created');
-        return redirect()->route('brand.index',$brand->id);
+        // // return redirect()->back()->with('success', 'Brand created');
+        // return redirect()->route('brand.index',$brand->id);
+        return response()->json([
+            'html' => "<option value='".$brand->id."'>".$brand->name."</option>",
+            'value' => $brand->id,
+        ]);
     }
 
     /**

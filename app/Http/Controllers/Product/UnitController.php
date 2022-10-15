@@ -50,7 +50,11 @@ class UnitController extends Controller
         $unit->save();
 
 
-        return response('success');
+       // return response('success');
+       return response()->json([
+        'html' => "<option value='".$unit->id."'>".$unit->name."</option>",
+        'value' => $unit->id,
+    ]);
     }
 
     /**

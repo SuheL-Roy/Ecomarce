@@ -51,8 +51,11 @@ class ColorController extends Controller
         $colors->creator = Auth::user()->id;
         $colors->save();
 
+        return response()->json([
+            'html' => "<option value='".$colors->id."'>".$colors->name."</option>",
+            'value' => $colors->id,
+        ]);
 
-        return response('success');
 
      // return redirect()->back()->with('success', 'color created successfully');
     }

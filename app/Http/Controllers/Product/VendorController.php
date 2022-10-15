@@ -58,7 +58,12 @@ class VendorController extends Controller
         $vendor->slug = Str::slug($vendor->name);
         $vendor->creator = Auth::user()->id;
         $vendor->save();
-        return 'success';
+        
+        return response()->json([
+            'html' => "<option value='".$vendor->id."'>".$vendor->name."</option>",
+            'value' => $vendor->id,
+        ]);
+
     }
 
     /**
@@ -67,9 +72,9 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Vendor $vendor)
     {
-        //
+        return view('admin.product.Vendor.view',compact('vendor'));
     }
 
     /**

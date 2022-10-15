@@ -21,6 +21,7 @@
         rel="stylesheet" />
     <!-- Bootstrap core CSS-->
     <link href="{{ asset('contents/admin') }}/css/bootstrap.min.css" rel="stylesheet" />
+   
     <!-- animate CSS-->
     <link href="{{ asset('contents/admin') }}/css/animate.css" rel="stylesheet" type="text/css" />
     <!-- Icons CSS-->
@@ -32,6 +33,7 @@
     <!-- Custom Style-->
     <link href="{{ asset('contents/admin') }}/css/app-style.css" rel="stylesheet" />
     <script src="{{ asset('contents/admin') }}/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('contents/admin') }}/custom.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
         $.ajaxSetup({
@@ -245,6 +247,9 @@
         </div>
     </div>
 </div>
+@once
+ @include('admin.product.components.file_manager')   
+@endonce
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
     @csrf

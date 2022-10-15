@@ -22,6 +22,15 @@ class MainCategoryController extends Controller
         return view('admin.product.Main_Category.index',compact('mainCategory'));
     }
 
+    public function get_main_category_json(){
+        $collection = MainCategory::where('status',1)->latest()->get();
+        $options = '';
+        foreach ($collection as $key => $value) {
+            $options .= "<option ".($key==0?' selected':'')." value='".$value->id."'>".$value->name."</option>";
+        }
+        return $options;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -56,8 +65,13 @@ class MainCategoryController extends Controller
         $main_category->creator = Auth::user()->id;
         $main_category->save();
 
-         //return redirect()->back()->with('success', 'category created');
-        return redirect()->route('Main-category.index',$main_category->id);
+       // return redirect()->back()->with('success', 'category created');
+       // return redirect()->route('Main-category.index',$main_category->id);
+       return response()->json([
+        'html' => "<option value='".$main_category->id."'>".$main_category->name."</option>",
+        'value' => $main_category->id,
+    ]);
+
 
     }
 

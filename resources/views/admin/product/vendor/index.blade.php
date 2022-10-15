@@ -42,9 +42,9 @@
 
                                         <td>
                                             <div>
-                                                <a type="button" href="{{ route('vendor.show',$data->id) }}" class="btn btn-light waves-effect waves-light m-1">
+                                                {{-- <a type="button" href="{{ route('vendor.show',$data->id) }}" class="btn btn-light waves-effect waves-light m-1">
                                                     <i class="fa fa-eye"></i> <span>view</span>
-                                                </a>
+                                                </a> --}}
                                                <a type="button" href="{{ route('vendor.edit',$data->id) }}" class="btn btn-light waves-effect waves-light m-1">
                                                     <i class="fa fa-pencil"></i> <span>edit</span>
                                                 </a>

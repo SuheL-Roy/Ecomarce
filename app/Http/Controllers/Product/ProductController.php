@@ -54,18 +54,21 @@ class ProductController extends Controller
         //return $main_categories;
 
         $latest_main_category_id = MainCategory::where('status', 1)->latest()->first()->id;
+       // return $latest_main_category_id;
+
+         $categories = Category::where('status', 1)->where('main_category_id', $latest_main_category_id)->latest()->get();
 
         $latest_category_id = Category::where('status', 1)->where('main_category_id', $latest_main_category_id)->latest()->first()->id;
-
-        $categories = Category::where('status', 1)->where('main_category_id', $latest_main_category_id)->latest()->get();
-
-       // return [$latest_main_category_id,$latest_category_id,$categories];
+      
+        
+       //return [$latest_main_category_id];
 
         $subcategories = SubCategory::where('status', 1)
             ->where('main_category_id', $latest_main_category_id)
             ->where('category_id', $latest_category_id)->latest()->get();
 
-        // return [$subcategories];
+           //return $subcategories;
+
         return view('admin.product.create', compact('subcategories','writer','publication','brands','colors','sizes','units','status','main_categories','categories','vendor'));
     }
 
@@ -77,11 +80,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+      
       $this->validate($request,[
-        'name'=>['required'],
+        'product_name'=>['required'],
         'brand_id'=>['required'],
-        'main_category_id'=>['required'],
-        'category_id'=> ['required'],
+        'product_main_category_id'=>['required'],
+        'product_category_id'=> ['required'],
         'writer_id' => ['required'],
         'publication_id' => ['required'],
         'sub_category_id'=> ['required'],
@@ -89,6 +93,7 @@ class ProductController extends Controller
         'size_id'=> ['required'],
         'unit_id'=> ['required'],
         'price'=>['required'],
+        'tax'=>['required'],
         'discount_price'=> ['required'],
         'expiration_date'=> ['required'],
         'stock'=> ['required'],
@@ -100,6 +105,7 @@ class ProductController extends Controller
         'vendor_id'=> ['required'],
         'status'=> ['required'],
       ]);
+     
     }
 
     /**

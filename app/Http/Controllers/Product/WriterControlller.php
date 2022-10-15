@@ -55,7 +55,12 @@ class WriterControlller extends Controller
         $writer->slug = Str::slug($writer->name);
         $writer->creator = Auth::user()->id;
         $writer->save();
-        return 'success';
+        //return 'success';
+
+        return response()->json([
+            'html' => "<option value='".$writer->id."'>".$writer->name."</option>",
+            'value' => $writer->id,
+        ]);
        
     }
 

@@ -51,8 +51,11 @@ class SizeController extends Controller
         $size->slug = Str::slug($size->name);
         $size->creator = Auth::user()->id;
         $size->save();
-
-        return redirect()->route('size.index')->with('success', 'size created successfully');
+        return response()->json([
+            'html' => "<option value='".$size->id."'>".$size->name."</option>",
+            'value' => $size->id,
+        ]);
+       // return redirect()->route('size.index')->with('success', 'size created successfully');
     }
 
     /**

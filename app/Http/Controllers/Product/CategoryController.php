@@ -24,6 +24,17 @@ class CategoryController extends Controller
         return view('admin.product.category.index', compact('Category'));
     }
 
+    public function get_category_json()
+    {
+
+        $collection = Category::where('status',1)->latest()->get();
+        $options = '';
+        foreach ($collection as $key => $value) {
+            $options .= "<option ".($key==0?' selected':'')." value='".$value->id."'>".$value->name."</option>";
+        }
+        return $options;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -60,8 +71,13 @@ class CategoryController extends Controller
         $category->slug = Str::slug($category->name);
         $category->creator = Auth::user()->id;
         $category->save();
-        return 'success';
+       // return 'success';
        // return redirect()->back()->with('success', 'category created');
+       return response()->json([
+        'html' => "<option value='".$category->id."'>".$category->name."</option>",
+        'value' => $category->id,
+    ]);
+
     
     }
 
@@ -121,6 +137,7 @@ class CategoryController extends Controller
            //dd($main_category_id);
            //echo'djdd';
            $categories = Category::where('main_category_id', $main_category_id)->get();
+          // return $categories;
            $option = "";
            foreach( $categories as $key=>$value){
              $id = $value->id;
