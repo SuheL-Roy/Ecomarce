@@ -212,16 +212,20 @@ $('.input_file_body').on('click',function(){
    
 })
  let selected_image = [];
+ let selected_image_id = [];
 const activate_image_function = () =>{
     selected_image = [];
 $('.fm_checkbox').on('click',function(){
    let value = $(this).data('name');
+   let value_id = $(this).val();
   // $(selected_file_input).val(name);
   let check_exits = selected_image.includes(value);
   if(check_exits){
     selected_image = selected_image.filter(name=>name != value)
+    selected_image_id = selected_image_id.filter(id=>id != value_id)
   }else{
     selected_image.push(value);
+    selected_image_id.push(value_id);
   }
    
    // console.log(value,selected_image);
@@ -235,7 +239,8 @@ $('#fm_confirm_btn').on('click',function(e){
             $(selected_file_input).val(selected_image[0]);
             $(selected_file_input).siblings('img').attr('src','/'+selected_image[0]);
         }else{
-            $(selected_file_input).val(JSON.stringify(selected_image));
+            // $(selected_file_input).val(JSON.stringify(selected_image));
+            $(selected_file_input).val(JSON.stringify(selected_image_id));
             $(selected_file_input).siblings('img').remove();
             for(let index = 0; index<selected_image.length;index++){
                 const element = selected_image[index];
@@ -267,3 +272,20 @@ $('.fm_file_importer').on('change',function(){
         }
     })
 })
+
+$('.product_main_category').on('change',function(){
+    let value = $(this).val();
+    $.get("/admin/product/get-all-cateogory-selected-by-main-category/" + value,(res)=>{
+        $('.product_category').html(res);
+    })
+   // console.log(value);
+})
+
+$('.product_category').on('change',function(){
+    let value = $(this).val();
+    $.get("/admin/product/get-all-sub-category-selected-by-category/" + value,(res)=>{
+        $('.product_sub_category').html(res);
+    })
+   // console.log(value);
+})
+

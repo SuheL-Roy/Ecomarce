@@ -31,7 +31,7 @@
                             <div class="form-group col-md-6  col-xl-4">
                                 <label for="input-22" class="col-form-label">Brand</label>
                                 @include('admin.product.components.select',[
-                                    'name' => 'brand_id',
+                                    'name' => 'brand',
                                     'attributes' => 'multiple',
                                     'class' => 'multiple-select',
                                     'collection' => $brands,
@@ -47,8 +47,8 @@
                                 <label for="input-22" class="col-form-label">Main Category</label>
                                 @include('admin.product.components.select',[
                                     'name' => 'product_main_category_id',
-                                    'attributes' => 'multiple',
-                                    'class' => 'multiple-select',
+                                    'attributes' => 'multiple ',
+                                    'class' => 'multiple-select product_main_category',
                                     'collection' => $main_categories,
                                     'action' => route('Main-category.store'),
                                      'fields' => [
@@ -57,23 +57,14 @@
                                         
                                      ] 
                                     ])
-                                {{-- <div class="">
-                                    <!-- <input type="text" class="form-control" id="input-22" placeholder="Enter Your Email Address" /> -->
-                                    <select name="main_category_id" id="select_main_category_id"  class="form-control multiple-select">
-                                        @foreach($main_categories as $key=>$item )
-                                        <option {{ $key==0?'selected':'' }} value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger main_category_id"></span>
-
-                                </div> --}}
+                               
                             </div>
                             <div class="form-group col-md-6  col-xl-4">
                                 <label for="input-22" class="col-form-label">Category</label>
                                 @include('admin.product.components.select',[
                                     'name' => 'product_category_id',
                                     'attributes' => 'multiple',
-                                    'class' => 'multiple-select',
+                                    'class' => 'multiple-select product_category',
                                     'collection' => $categories,
                                     'action' => route('category.store'),
                                     'fields' => [
@@ -87,9 +78,9 @@
                             <div class="form-group col-md-6  col-xl-4">
                                 <label for="input-22" class="col-form-label">Sub Category</label>
                                 @include('admin.product.components.select',[
-                                    'name' => 'sub_category_id',
+                                    'name' => 'product_sub_category_id',
                                     'attributes' => 'multiple',
-                                    'class' => 'multiple-select',
+                                    'class' => 'multiple-select product_sub_category',
                                     'collection' => $subcategories,
                                     'action' => route('sub-category.store'),
                                      'fields' => [
@@ -155,8 +146,7 @@
                                     'action' => route('color.store'),
                                      'fields' => [
                                         ['name' => 'name','type' => 'text'],
-                                        // ['name' => 'icon', 'type' => 'file'],
-                                        // ['name' => 'description', 'type' => 'textarea'],
+                                      
                                      ] 
                                     ])
                             </div>
@@ -213,10 +203,7 @@
                                     'type' => 'text',
                                     'attr' =>"step='0.01'"
                                 ])
-                                {{-- <div class="">
-                                    <input type="text" name="price" class="form-control" id="input-22" placeholder="Enter Your price" />
-                                    <span class="text-danger price" style="font-size: 15px;"></span>
-                                </div> --}}
+                               
                             </div>
                             <div class="form-group col-md-6  col-xl-4">
                                 <label for="input-22" class="col-form-label">Tax</label>
@@ -224,23 +211,16 @@
                                     'name'=>'tax',
                                     'type' => 'text',            
                                 ])
-                                {{-- <div class="">
-                                    <input type="text" name="price" class="form-control" id="input-22" placeholder="Enter Your price" />
-                                    <span class="text-danger price" style="font-size: 15px;"></span>
-                                </div> --}}
+                               
                             </div>
 
                             <div class="form-group col-md-6  col-xl-4">
                                 <label for="input-22" class="col-form-label">Discount</label>
                                 @include('admin.product.components.input',[
-                                    'name'=>'discount_price',
+                                    'name'=>'discount',
                                     'type' => 'text',
                                 ])
-                                {{-- <div class="">
-                                    <input type="text" name="discount_price" class="form-control" id="input-22" placeholder="Enter Your discount" />
-                                    <span class="text-danger discount_price"></span>
-
-                                </div> --}}
+                                
                             </div>
                             <div class="form-group col-md-6  col-xl-4">
                                 <label for="input-22" class="col-form-label">Expiration Date</label>
@@ -248,11 +228,7 @@
                                     'name'=>'expiration_date',
                                     'type' => 'date',
                                 ])
-                                {{-- <div class="">
-                                    <input type="date" name="expiration_date" class="form-control" id="input-22" placeholder="Enter Your expiration_date" />
-                                    <span class="text-danger expiration_date"></span>
-
-                                </div> --}}
+                                
                             </div>
                             <div class="form-group col-md-6  col-xl-4">
                                 <label for="input-22" class="col-form-label">Stock</label>
@@ -260,10 +236,7 @@
                                     'name'=>'stock',
                                     'type' => 'number',
                                 ])
-                                {{-- <div class="">
-                                    <input type="number" name="stock" class="form-control" id="input-22" placeholder="stock details" />
-                                    <span class="text-danger stock"></span>
-                                </div> --}}
+                                
                             </div>
 
                             <div class="form-group col-md-6  col-xl-4">
@@ -272,11 +245,7 @@
                                     'name'=>'alert_quantity',
                                     'type' => 'number',
                                 ])
-                                {{-- <div class="">
-                                    <input type="number" name="alert_quantity" class="form-control" id="input-22" placeholder="" />
-                                    <span class="text-danger alert_quantity"></span>
-
-                                </div> --}}
+                               
                             </div>
                             
 
@@ -305,11 +274,7 @@
                                     'type' => 'file',
                                     'attr' => ''
                                 ])
-                                {{-- <div class="">
-                                    <input type="file" name="thumb_image" class="form-control" id="input-22" cols="30" rows="10" placeholder="Features"></input>
-
-                                    <span class="text-danger thumb_image"></span>
-                                </div> --}}
+                                
                             </div>
 
 
@@ -320,20 +285,17 @@
                                     'type' => 'file',
                                     'attr' => 'multiple'
                                 ])
-                                {{-- <div class="">
-                                    <input type="file" multiple name="related_images[]" class="form-control" id="input-22" cols="30" rows="10" placeholder="Features"></input>
-
-                                    <span class="text-danger related_images"></span>
-                                </div> --}}
+                               
                             </div>
                             <div class="form-group col-md-6  col-xl-6">
                                 <label for="" class="col-form-label">Status</label>
                                 <div class="">
-                                  <select name="status" id=""  class="form-control">
-                                        @foreach($status as $key=>$item )
-                                        <option {{ $key==0?'selected':'' }} value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
+                                      <select name="status"  class="form-control">
+                                            @foreach ($status as $item)
+                                                <option value="{{ $item->serial }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                       
                                     <span class="text-danger status"></span>
                                 </div>
                             </div>

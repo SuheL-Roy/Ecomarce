@@ -45,6 +45,8 @@ class ColorController extends Controller
             'name' => ['required']
         ]);
 
+      //  dd($request->all);
+
         $colors = color::create($request->all());
 
         $colors->slug = Str::slug($colors->name);

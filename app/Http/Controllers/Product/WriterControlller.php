@@ -45,6 +45,7 @@ class WriterControlller extends Controller
             'description' => ['required'],
             'image' => ['required']
         ]);
+        
         $writer = Writer::create($request->except('image'));
 
         if ($request->hasFile('image')) {
