@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\FilaManagerController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserRoleController;
@@ -88,6 +89,16 @@ Route::group([
     Route::post('/update', [UserRoleController::class, 'update'])->name('admin_user_role_update');
     Route::post('/delete', [UserRoleController::class, 'delete'])->name('admin_user_role_delete');
     
+});
+Route::group([
+    'prefix' => 'file-manager',
+    'middleware' => ['auth'],
+    'namespace' => 'Admin'
+], function () {
+
+    Route::post('/store-file', [FilaManagerController::class,'store_file'])->name('admin_fm_store_file');
+    Route::get('/get-files', [FilaManagerController::class,'get_files'])->name('admin_fm_get_files');
+    Route::delete('/delete-file/{image}', [FilaManagerController::class,'delete_file'])->name('admin_fm_delete_file');
 });
 
 Route::group([

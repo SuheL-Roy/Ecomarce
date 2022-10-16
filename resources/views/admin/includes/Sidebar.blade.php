@@ -39,6 +39,8 @@
                     All publication </a></li>
             <li><a href="{{ route('vendor.index') }}"><i class="zmdi zmdi-dot-circle-alt"></i>
                     All vendor </a></li>
+            {{-- <li><a href="{{ route('admin_fm_get_files') }}"><i class="zmdi zmdi-dot-circle-alt"></i>
+                        All test </a></li> --}}
 
 
         </ul>
