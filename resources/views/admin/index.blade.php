@@ -12,7 +12,7 @@
             <div class="col-lg-12">
                 <div style="height:600px">
                     <!--Please remove the height before using this page-->
-                
+               
                 </div>
             </div>
         </div>

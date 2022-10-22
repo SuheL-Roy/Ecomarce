@@ -51,6 +51,7 @@
         <![endif]-->
 
     <!-- header start -->
+    <div id="app">
     <div class="main-wrapper box-shadow">
         <header class="clearfix">
             <div class="header-top-area bb hidden-xs">
@@ -401,10 +402,11 @@
         </footer>
         <!-- footer-area end -->
     </div>
-
+   </div>
+    <script src="/js/app.js"></script>
     <!-- Placed js at the end of the document so the pages load faster -->
     <!-- jquery latest version -->
-    <script src="{{ asset('contents/websites') }}/js/vendor/jquery-1.12.4.min.js"></script>
+    {{-- <script src="{{ asset('contents/websites') }}/js/vendor/jquery-1.12.4.min.js"></script> --}}
     <!-- Popper js -->
     <script src="{{ asset('contents/websites') }}/js/popper.js"></script>
     <!-- Bootstrap framework js -->

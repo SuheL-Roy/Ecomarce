@@ -11,6 +11,8 @@ $(function () {
             url: $(this).attr("href"),
             type: "delete",
             success: (res) => {
+                $(this).parents($(this).data('parent')).remove();     
+               // $(this).parents('li').remove();
                 $(this).parents("tr").remove();
                 Toast.fire({
                     icon: "success",

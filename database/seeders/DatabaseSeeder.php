@@ -622,7 +622,7 @@ class DatabaseSeeder extends Seeder
         // Products
         DB::table('main_category_product')->truncate();
         DB::table('category_product')->truncate();
-        DB::table('sub_category_product')->truncate();
+        DB::table('product_sub_category')->truncate();
         DB::table('color_product')->truncate();
         DB::table('product_size')->truncate();
         DB::table('product_unit')->truncate();
@@ -688,7 +688,7 @@ class DatabaseSeeder extends Seeder
                 ['category_id' => 3, 'product_id' => $product->id]
             ]);
 
-            DB::table('sub_category_product')->insert([
+            DB::table('product_sub_category')->insert([
                 ['sub_category_id' => 1, 'product_id' => $product->id],
                 ['sub_category_id' => 2, 'product_id' => $product->id],
                 ['sub_category_id' => 3, 'product_id' => $product->id]

@@ -29,7 +29,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.product.index');
+        $collection = Product::with(['Main_category','category','sub_category','color','image','Publication','Size','Unit','Vendor','Writer'])
+                                ->orderBy('id','DESC')->paginate(12);
+        
+        return view('admin.product.index',compact('collection'));
     }
 
     /**
@@ -82,7 +85,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,Product $product)
+    public function store(Request $request, Product $product)
     {
         $this->validate($request, [
             'product_name' => ['required'],
@@ -105,7 +108,7 @@ class ProductController extends Controller
             'related_images' => ['required'],
             'status' => ['required'],
         ]);  
-
+    // dd($request->all());
         $product = new Product();
         $product->name = $request->product_name;
         $product->brand_id = $request->brand;
@@ -130,18 +133,37 @@ class ProductController extends Controller
 
         $product->save();
 
+        if($request->has('product_main_category_id')){
+            $product->Main_category->attach($request->product_main_category_id);
+        }  
+        if($request->has('product_category_id')){
+            $product->category->attach($request->product_category_id);
+        }  
+        if($request->has('product_sub_category_id')){
+            $product->sub_category->attach($request->product_sub_category_id);
+        }  
+        if($request->has('color_id')){
+            $product->attach($request->color);
+        }        
+        if($request->has('size_id')){
+            $product->attach($request->Size);
+        }  
+        if($request->has('writer_id')){
+            $product->attach($request->Unit);
+        }  
+        if($request->has('publication_id')){
+            $product->attach($request->Publication);
+        }  
+        if($request->has('product_main_category_id')){
+            $product->attach($request->Main_category);
+        }  
+        if($request->has('product_main_category_id')){
+            $product->attach($request->Main_category);
+        }  
+        
+        //dd($request->all());
+
         return $product;
-
-
-       
-
-
-
-
-
-
-        
-        
     }
 
     /**
@@ -150,9 +172,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Product $product)
     {
-        return view('admin.product.view');
+        //return $product;
+        return view('admin.product.view',compact('product'));
     }
 
     /**
@@ -184,8 +207,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return 'deleted successfully';
     }
 }
