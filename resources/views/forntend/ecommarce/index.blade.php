@@ -60,7 +60,7 @@
 			<div class="tab-area box-shadow bg-fff">
 				<div class="product-title home3-bg text-uppercase">
 					<i class="fa fa-check-square-o icon home3-bg2"></i>
-					<h3>Products category</h3>
+					<h3>Recent Product</h3>
 					<div class="tab-menu home3-tab-menu floatright hidden-xs">
 						<ul class="nav">
 							<li><a class="active">Electronics</a></li>
@@ -70,13 +70,17 @@
 					</div>
 				</div>
 				<div class="tab-content">
-					<div class="row">
-						@for($i=0; $i<=11; $i++) 
-						<div class="col-md-4">
+				 
+					 {{-- @for($i=0; $i<=11; $i++) 
+					<div class="col-md-4">
 						@include('forntend.ecommarce.product.home_product_body')
-					</div>
-					@endfor
 				</div>
+					@endfor  --}}
+				
+					
+						<single-product-body></single-product-body>
+					
+
 			</div>
 		</div>
 		<!-- tab-area end -->

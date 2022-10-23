@@ -43,7 +43,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [WebsiteController::class, 'index'])->name('website_index');
 Route::get('/products', [WebsiteController::class, 'products'])->name('website_products');
-Route::get('/products-details', [WebsiteController::class, 'product_details'])->name('website_product_details');
+Route::get('/products-details/{product}', [WebsiteController::class, 'product_details'])->name('website_product_details');
 Route::get('/cart', [WebsiteController::class, 'cart'])->name('website_product_cart');
 Route::get('/check-out', [WebsiteController::class, 'checkout'])->name('website_checkout');
 Route::get('/wish-list', [WebsiteController::class, 'wishlist'])->name('website_wishlist');
@@ -62,7 +62,7 @@ Route::group([
     // Route::get('/category-products-json/{main_category_id}/{category_id}', 'WebsiteController@category_product_json')->name('product_category_product_json');
 
 
-    Route::get('/latest-products-json/{limit}', [WebsiteController::class,'latest_product_json'])->name('product_latest_product_json');
+    Route::get('/latest-products-json', [WebsiteController::class,'latest_product_json'])->name('product_latest_product_json');
     Route::get('/search-products-json/{limit}/{key}', [WebsiteController::class,'search_product_json'])->name('search_latest_product_json');
     Route::get('/show-product-json/{product}', 'WebsiteController@show_product_json')->name('product_show_product_json');
     Route::get('/get-product-related-info-json/{product}', 'WebsiteController@get_product_related_info_json')->name('product_get_product_related_info_json');

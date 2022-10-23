@@ -2,7 +2,7 @@
     <div>
         <div class="card">
             <div class="card-body">
-                <CommentsAdd :post_comment="post_comment" :blog_details="blog_details"></CommentsAdd>
+                <CommentsAdd></CommentsAdd>
             </div>
         </div>
 
@@ -11,7 +11,7 @@
                 <ul>
                     <li
                         class="d-flex flex-wrap align-content-center my-3"
-                        v-for="item in selected_comments"
+                        v-for="item in get_selected_comments"
                         :key="item.id"
                     >
                         <img
@@ -35,9 +35,15 @@
 
 <script>
 import CommentsAdd from "./CommentsAdd.vue";
+import { mapGetters,mapActions } from 'vuex'
 export default {
-    props: ["selected_comments","post_comment","blog_details"],
-    components: { CommentsAdd }
+    // props: ["selected_comments","post_comment","blog_details"],
+    components: { CommentsAdd },
+    computed:{
+        ...mapGetters([
+           'get_selected_comments'
+        ])
+    }
 };
 </script>
 

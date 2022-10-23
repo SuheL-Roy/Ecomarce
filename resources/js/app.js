@@ -7,6 +7,7 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+const { default: store } = require('./store/index.js');
 
 /**
  * The following block of code may be used to automatically register your
@@ -25,25 +26,29 @@ Vue.component(
 );
 Vue.component(
     "single-product-body",
-    require("./components/SingleProductBody").default
+    require("./components/product/SingleProductBody.vue").default
+);
+Vue.component(
+    "product-details",
+    require("./components/product/ProductDetails.vue").default
 );
 
-Vue.component(
-    "blog-list",
-    require("./components/PropsByBlog/BlogList.vue").default
-);
-Vue.component(
-    "blog-details",
-    require("./components/PropsByBlog/BlogDetails.vue").default
-);
-Vue.component(
-    "comments",
-    require("./components/PropsByBlog/Comments.vue").default
-);
-Vue.component(
-    "comments-add",
-    require("./components/PropsByBlog/CommentsAdd.vue").default
-);
+// Vue.component(
+//     "blog-list",
+//     require("./components/PropsByBlog/BlogList.vue").default
+// );
+// Vue.component(
+//     "blog-details",
+//     require("./components/PropsByBlog/BlogDetails.vue").default
+// );
+// Vue.component(
+//     "comments",
+//     require("./components/PropsByBlog/Comments.vue").default
+// );
+// Vue.component(
+//     "comments-add",
+//     require("./components/PropsByBlog/CommentsAdd.vue").default
+// );
 
 //Vue.component('pagination', require('shetabit-laravel-vue-pagination'));
 //Vue.component('pagination', require('laravel-vue-pagination'));
@@ -57,78 +62,7 @@ Vue.component(
 if (document.getElementById("app")) {
     const app = new Vue({
         el: "#app",
+        store
 
-        created: function () {
-           this.latest_product();
-          // this.search_product()
-        },
-        data: function () {
-            return {
-                products: [],
-                products_list: [],
-                //pos_total_price: 0,
-            };
-        },
-        methods: {
-            latest_product: function() {
-                $.get("/json/latest-products-json/6", (res) => {
-                    // console.log(res);
-                       this.products = res.data;
-                   });
-            },
-            search_product: _.debounce(function(key) {
-                if(key.length > 0){
-                $.get("/json/search-products-json/6/"+key, (res) => {
-                    // console.log(res);
-                       this.products = res.data;
-                   });
-                }else{
-                    this.latest_product();
-                }
-                
-            },500),
-            add_product_to_pos_list: function (product) {
-                let product_check = this.products_list.find(
-                    (item) => item.id === product.id
-                );
-                if (product_check) {
-                    product_check.qty++;
-                } else {
-                    let Pos_products = {
-                        id: product.id,
-                        name: product.name,
-                        image: product.thumb_image,
-                        price: product.price,
-                        qty: 1,
-                    };
-                    this.products_list.unshift(Pos_products);
-                }
-               
-            },
-            delete_product_cart: function (product) {
-              this.products_list = this.products_list.filter((item)=>item.id !== product.id)
-             
-            },
-            update_pos_qty: function (product, qty) {
-                let product_check = this.products_list.find(
-                    (item) => item.id === product.id
-                );
-                product_check.qty = qty;
-              
-               
-            },
-           
-        },
-        computed:{
-          update_product_price:function(){
-            this.pos_total_price = this.products_list.reduce(
-              (total, product) => {
-                  return total + product.price * product.qty;
-              },
-              0
-          );
-          return this.pos_total_price;
-          }
-        }
     });
 }
