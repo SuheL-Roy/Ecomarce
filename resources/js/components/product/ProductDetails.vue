@@ -50,13 +50,13 @@
                     <a href="#">(3 customer reviews)</a><br />
                     <div
                         class="d-flex justify-content-between"
-                        style="width: 150px"
+                        style="width: 120px"
                     >
                         <span v-if="product.discount_price > 0"
                             ><del>$ {{ product.price }}</del></span
-                        ><span v-else>{{ product.price }}</span
+                        ><span v-else> ${{ product.price }}</span
                         ><span v-if="product.discount_price > 0"
-                            >$ {{ product.discount_price }}</span
+                            >$ {{ product.discount }}</span
                         >
                     </div>
                 </div>
@@ -79,11 +79,14 @@
                                 </label>
                                 <input
                                     class="form-control"
+                                    v-model="qty"
                                     min="1"
+                                    :max="
+                                        product.stock - product.minimum_amount
+                                    "
                                     name="quantity"
                                     value="1"
                                     type="number"
-                                    
                                 />
                             </div>
                         </div>
@@ -97,7 +100,12 @@
                                     "
                                     >Color:
                                 </label>
-                                <select name="" class="form-control" id="">
+                                <select
+                                    name=""
+                                    v-model="color"
+                                    class="form-control"
+                                    id=""
+                                >
                                     <option
                                         v-for="color in product.color"
                                         :key="color.id"
@@ -118,13 +126,29 @@
                                     "
                                     >Size:
                                 </label>
-                                <select name="" class="form-control" id="">
-                                    <option v-for="(size) in product.size" :key="size.id" :value="size.id">{{size.name}}</option>
+                                <select
+                                    name=""
+                                    v-model="size"
+                                    class="form-control"
+                                    id=""
+                                >
+                                    <option
+                                        v-for="size in product.size"
+                                        :key="size.id"
+                                        :value="size.id"
+                                    >
+                                        {{ size.name }}
+                                    </option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-12">
-                            <button type="button">Add to cart</button>
+                            <button
+                                @click.prevent="add_to_cart(product)"
+                                type="button"
+                            >
+                                Add to cart
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -225,6 +249,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     props: ["selected_product"],
     created: function () {
@@ -233,14 +258,42 @@ export default {
             this.product_show_image = this.product.thumb_image;
         } else {
             this.product = this.selected_product;
-            this.product_show_image = this.selected_product && this.product.thumb_image;
+            this.product_show_image =
+                this.selected_product && this.product.thumb_image;
         }
+        this.$watch("get_product_details", (newVal, oldVal) => {
+            this.product = this.get_product_details;
+            this.product_show_image = this.product.thumb_image;
+        });
+    },
+    methods: {
+        ...mapMutations(["set_carts"]),
+        add_to_cart: function (product) {
+          let carts = {
+            qty:this.qty,
+            color:this.color,
+            size:this.size,
+            product:this.product
+          }
+          this.set_carts(carts);
+          this.qty = 0;
+          this.color = '';
+          this.size = '';
+          $('#productViewModal').modal('hide');
+        },
     },
     data: function () {
         return {
-            product_show_image: this.selected_product.thumb_image,
+            product_show_image: "",
             product: [],
+            qty: 0,
+            color: "",
+            size: "",
         };
+        
+    },
+    computed: {
+        ...mapGetters(["get_product_details"]),
     },
 };
 </script>

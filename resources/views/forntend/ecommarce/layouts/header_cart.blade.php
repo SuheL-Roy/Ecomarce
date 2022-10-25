@@ -1,5 +1,5 @@
-<div class="top-cart home3-top-cart home3-bg bg-5">
-    <div class="cart">
+<div class="top-cart home3-top-cart home3-bg bg-5" id="app">
+    {{-- <div class="cart">
         <i class="icofont icofont-bag"></i>
         <a href="#"> 3 Items - <strong>$500.00 </strong>
             <i class="icofont icofont-rounded-down"></i>
@@ -54,5 +54,6 @@
                 </div>
             </div>
         </li>
-    </ul>
+    </ul> --}}
+    <product-header-card></product-header-card>
 </div>

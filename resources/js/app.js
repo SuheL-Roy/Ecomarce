@@ -7,7 +7,10 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
+const { data } = require("jquery");
 const { default: store } = require('./store/index.js');
+
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,6 +34,10 @@ Vue.component(
 Vue.component(
     "product-details",
     require("./components/product/ProductDetails.vue").default
+);
+Vue.component(
+    "product-header-card",
+    require("./components/product/ProductHeaderCart.vue").default
 );
 
 // Vue.component(
@@ -62,7 +69,6 @@ Vue.component(
 if (document.getElementById("app")) {
     const app = new Vue({
         el: "#app",
-        store
-
+        store,
     });
 }

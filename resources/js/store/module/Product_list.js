@@ -13,7 +13,7 @@ const getters ={
 const actions = {
     fetch_product_list: function(state){
        axios.get('/json/latest-products-json').then((res)=>{
-            console.log(res);
+           // console.log(res);
             this.commit('set_product_list',res.data);
        })
      },
@@ -26,7 +26,7 @@ const mutations = {
      },
      set_product_details: function(state,product_details){
          state.product_details = product_details;
-        
+          //console.log(product_details);
      },
     
 }

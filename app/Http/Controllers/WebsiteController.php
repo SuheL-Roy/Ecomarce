@@ -13,7 +13,7 @@ class WebsiteController extends Controller
 
    public function latest_product_json(Request $request){
       $collection = Product::with(['Main_category','category','sub_category','color','image','Publication','Size','Unit','Vendor','Writer'])
-      ->orderBy('id','DESC')->paginate(9);
+      ->orderBy('id','DESC')->paginate(9); 
       return $collection;
    }
 
@@ -37,7 +37,7 @@ class WebsiteController extends Controller
      }
 
      public function product_details(Product $product){
-      $product['discount_price'] = HelperController::discount_price($product->price, $product->discount_price, $product->expiration_date);
+      $product['discount'] = HelperController::discount_price($product->price, $product->discount_price, $product->expiration_date);
       $product['image'] = $product->image()->get();
       $product['category'] = $product->category()->get();
       $product['sub_category'] = $product->sub_category()->get();
@@ -48,6 +48,7 @@ class WebsiteController extends Controller
       $product['unit'] = $product->Unit()->get();
       $product['vendor'] = $product->Vendor()->get();
       $product['writer'] = $product->Writer()->get();
+      //echo $product->discount;
       //return $product;
       return view('forntend.ecommarce.product_details',compact('product'));
      }
