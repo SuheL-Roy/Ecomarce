@@ -21,7 +21,7 @@
                         <h1>Cart</h1>
                     </div>
                 </div>
-                <div class="col-xl-12 col-lg-12 col-md-12 col-12">
+                {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-12">
                     <div class="cart-table mb-50 bg-fff">
                         <form action="#">
                             <div class="table-content table-responsive">
@@ -43,7 +43,7 @@
                                             </td>
                                             <td class="product-thumbnail">
                                                 <a href="#">
-                                                    <img src="{{ asset('contents/websites') }}/img/cart/1.jpg" alt="" />
+                                                    <img src="http://127.0.0.1:8000/contents/websites/img/cart/1.jpg" alt="" />
                                                 </a>
                                             </td>
                                             <td class="product-name">
@@ -65,7 +65,7 @@
                                             </td>
                                             <td class="product-thumbnail">
                                                 <a href="#">
-                                                    <img src="{{ asset('contents/websites') }}/img/cart/2.jpg" alt="" />
+                                                    <img src="http://127.0.0.1:8000/contents/websites/img/cart/2.jpg" alt="" />
                                                 </a>
                                             </td>
                                             <td class="product-name">
@@ -87,7 +87,7 @@
                                             </td>
                                             <td class="product-thumbnail">
                                                 <a href="#">
-                                                    <img src="{{ asset('contents/websites') }}/img/cart/3.jpg" alt="" />
+                                                    <img src="http://127.0.0.1:8000/contents/websites/img/cart/3.jpg" alt="" />
                                                 </a>
                                             </td>
                                             <td class="product-name">
@@ -119,12 +119,15 @@
                             </div>
                         </form>
                     </div>
+                </div> --}}
+                <div class="col-12">
+                    <card-details></card-details>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-12">
                     <!-- product area start -->
-                    <div class="cart-product bg-fff box-shadow mb-50">
+                    {{-- <div class="cart-product bg-fff box-shadow mb-50">
                         <div class="product-title home2-bg-1 text-uppercase home2-product-title">
                             <i class="fa fa-bookmark icon bg-4"></i>
                             <h3>Cross-Sells </h3>
@@ -133,8 +136,8 @@
                             <div class="product-wrapper bl">
                                 <div class="product-img">
                                     <a href="#">
-                                        <img src="{{ asset('contents/websites') }}/img/product/1.jpg" alt="" class="primary" />
-                                        <img src="{{ asset('contents/websites') }}/img/product/2.jpg" alt="" class="secondary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/1.jpg" alt="" class="primary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/2.jpg" alt="" class="secondary" />
                                     </a>
                                     <div class="product-icon c-fff hover-bg">
                                         <ul>
@@ -161,8 +164,8 @@
                             <div class="product-wrapper bl">
                                 <div class="product-img">
                                     <a href="#">
-                                        <img src="{{ asset('contents/websites') }}/img/product/3.jpg" alt="" class="primary" />
-                                        <img src="{{ asset('contents/websites') }}/img/product/4.jpg" alt="" class="secondary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/3.jpg" alt="" class="primary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/4.jpg" alt="" class="secondary" />
                                     </a>
                                     <div class="product-icon c-fff hover-bg">
                                         <ul>
@@ -188,8 +191,8 @@
                             <div class="product-wrapper bl">
                                 <div class="product-img">
                                     <a href="#">
-                                        <img src="{{ asset('contents/websites') }}/img/product/5.jpg" alt="" class="primary" />
-                                        <img src="{{ asset('contents/websites') }}/img/product/6.jpg" alt="" class="secondary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/5.jpg" alt="" class="primary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/6.jpg" alt="" class="secondary" />
                                     </a>
                                     <div class="product-icon c-fff hover-bg">
                                         <ul>
@@ -215,8 +218,8 @@
                             <div class="product-wrapper bl">
                                 <div class="product-img">
                                     <a href="#">
-                                        <img src="{{ asset('contents/websites') }}/img/product/7.jpg" alt="" class="primary" />
-                                        <img src="{{ asset('contents/websites') }}/img/product/8.jpg" alt="" class="secondary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/7.jpg" alt="" class="primary" />
+                                        <img src="http://127.0.0.1:8000/contents/websites/img/product/8.jpg" alt="" class="secondary" />
                                     </a>
                                     <div class="product-icon c-fff hover-bg">
                                         <ul>
@@ -240,7 +243,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- product area end -->
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-12">
@@ -253,16 +256,16 @@
                         <table>
                             <tr>
                                 <td><strong>Subtotal</strong></td>
-                                <td><b>$10,120.00</b></td>
+                                <td><b>$ @{{get_sub_total}}</b></td>
                             </tr>
                             <tr>
                                 <td><strong>Total</strong></td>
-                                <td><b>$10,120.00</b></td>
+                                <td><b>$ @{{get_sub_total}}</b></td>
                             </tr>
                         </table>
                     </div>
                     <div class="simple-product-form contuct-form mb-30">
-                        <form action="#">
+                        <form action="/check-out">
                             <button>Proceed to Checkout</button>
                         </form>
                     </div>

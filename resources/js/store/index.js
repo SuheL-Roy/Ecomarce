@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from 'vuex';
+import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 import Product from './module/Product_list.js'
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
     state:{},
     getters:{},
     actions:{},
-    mutations:{}
+    mutations:{},
+    plugins: [createPersistedState()],
 })
 
 export default store;

@@ -28,6 +28,7 @@
         "laravel-mix": "^5.0.1",
         "laravel-vue-pagination": "^3.0.0",
         "moment": "^2.29.4",
-        "vuex": "^3.6.2"
+        "vuex": "^3.6.2",
+        "vuex-persistedstate": "^4.1.0"
     }
 }

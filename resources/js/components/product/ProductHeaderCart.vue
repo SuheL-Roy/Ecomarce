@@ -3,7 +3,7 @@
         <div class="cart">
             <i class="icofont icofont-bag"></i>
             <a href="#">
-                {{ get_carts.length }} Items - <strong>$ 123 </strong>
+                {{ get_carts.length }} Items - <strong>$ {{get_sub_total}} </strong>
                 <i class="icofont icofont-rounded-down"></i>
             </a>
         </div>
@@ -19,7 +19,7 @@
                         <div class="cart-content">
                             <a href="#">{{cart.product.name}}</a>
                             <a href="#" class="pull-right cart-remove">
-                                <i class="fa fa-times" ></i>
+                                <i class="fa fa-times" @click.prevent="remove_from_cart(cart)" ></i>
                             </a>
                             <div class="d-flex justify-content-between flex-wrap">
                                 <span>{{cart.qty}} x ${{ cart.product.discount || cart.product.price }}</span>
@@ -29,11 +29,11 @@
                     </div>
                     <div class="total mt-10">
                         <span class="pull-left">Subtotal:</span>
-                        <span class="pull-right">$566</span>
+                        <span class="pull-right">${{get_sub_total}}</span>
                     </div>
                     <div class="cart-btn mb-20">
-                        <a href="">view cart</a>
-                        <a href="/checkout">Checkout</a>
+                        <a href="/carts">view cart</a>
+                        <a href="/check-out">Checkout</a>
                     </div>
                 </div>
             </li>
@@ -45,8 +45,17 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
    
+    methods:{
+       ...mapMutations(['remove_carts']),
+       remove_from_cart:function(cart){
+         this.remove_carts(cart);
+       }
+    },
     computed: {
-        ...mapGetters(["get_carts"]),
+        ...mapGetters([
+            "get_carts",
+            "get_sub_total"
+        ]),
     },
 }
 </script>

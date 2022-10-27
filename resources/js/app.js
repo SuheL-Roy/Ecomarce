@@ -39,6 +39,10 @@ Vue.component(
     "product-header-card",
     require("./components/product/ProductHeaderCart.vue").default
 );
+Vue.component(
+    "card-details",
+    require("./components/product/CartDetails.vue").default
+);
 
 // Vue.component(
 //     "blog-list",
@@ -66,9 +70,15 @@ Vue.component(
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import {mapGetters} from 'vuex'
 if (document.getElementById("app")) {
     const app = new Vue({
         el: "#app",
         store,
+        computed: {
+            ...mapGetters([
+                "get_sub_total"
+            ]),
+        },
     });
 }

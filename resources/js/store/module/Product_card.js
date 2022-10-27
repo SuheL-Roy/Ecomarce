@@ -2,10 +2,13 @@ import axios from "axios";
 
 
 const state = {
-    cart:[],
+    sub_total:0,
+    carts:[],
+
 }
 const getters ={
-   get_carts: state=>state.cart,
+   get_sub_total: state=>state.sub_total, 
+   get_carts: state=>state.carts,
   
 }
 const actions = {
@@ -13,11 +16,29 @@ const actions = {
 }
 const mutations = {
    set_carts: function(state,cart){
-    state.cart.push(cart);
-    console.log(state.cart);
+    let temp_cart = state.carts.filter((item)=>item.product.id != cart.product.id);
+    state.carts = temp_cart;
+    state.carts.push(cart);
+    this.commit('calculate_cart_total');
+      console.log(state.carts);
    },
    remove_carts: function(state,cart){
-    console.log(cart);
+    let temp_cart = state.carts.filter((item)=>item.product.id != cart.product.id);
+    state.carts = temp_cart;
+    this.commit('calculate_cart_total');
+    //console.log(cart);
+   },
+   change_products_qty: function(state,product_info){
+      let product = state.carts.find((item) => {
+         return item.product.id  === product_info.product_id;
+     });
+     product.qty = product_info.qty;
+      this.commit('calculate_cart_total');
+    // console.log(product_info.qty);
+   },
+   calculate_cart_total: function(state,cart){
+    state.sub_total = state.carts.reduce((total,item)=>total += (item.product_price * item.qty),0);
+   // state.sub_total = state.carts.reduce((total,item) += item.product_price,0);
    }
 }
 
