@@ -193,8 +193,22 @@ export default {
         };
 
     },
+    watch: {
+        get_selected_card: {
+            handler(val){
+               //  console.log('hi',this.get_selected_card);
+                 this.qty = this.get_selected_card.qty
+                 this.color = this.get_selected_card.color
+                 this.size = this.get_selected_card.size
+            },
+            deep: true
+        }
+    },
     computed: {
-        ...mapGetters(["get_product_details"]),
+        ...mapGetters([
+            "get_product_details",
+            "get_selected_card"
+        ]),
         get_product_price: function(){
             if(this.product.discount_price > 0){
                 return this.product.discount;

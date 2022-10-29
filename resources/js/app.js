@@ -43,6 +43,10 @@ Vue.component(
     "card-details",
     require("./components/product/CartDetails.vue").default
 );
+Vue.component(
+    "check-out",
+    require("./components/product/CheckOut.vue").default
+);
 
 // Vue.component(
 //     "blog-list",

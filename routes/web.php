@@ -45,10 +45,14 @@ Route::get('/', [WebsiteController::class, 'index'])->name('website_index');
 Route::get('/products', [WebsiteController::class, 'products'])->name('website_products');
 Route::get('/products-details/{product}', [WebsiteController::class, 'product_details'])->name('website_product_details');
 Route::get('/carts', [WebsiteController::class, 'cart'])->name('website_product_cart');
-Route::get('/check-out', [WebsiteController::class, 'checkout'])->name('website_checkout');
+Route::get('/check-out', [WebsiteController::class, 'checkout'])->name('website_checkout')->middleware('auth');
+Route::post('/checkout-confirm',[WebsiteController::class,'CheckoutConfirm'])->name('checkout_confirms');
 Route::get('/wish-list', [WebsiteController::class, 'wishlist'])->name('website_wishlist');
 Route::get('/contact', [WebsiteController::class, 'contact'])->name('website_contact');
 Route::get('/learn-vue', [WebsiteController::class, 'vue'])->name('website_vue');
+
+Route::get('/checkout_success',[WebsiteController::class,'CheckOutSuccess'])->name('checkout_success');
+Route::get('/checkout_fail',function(){dd('fail');})->name('checkout_fail');
 
 
 Route::group([
