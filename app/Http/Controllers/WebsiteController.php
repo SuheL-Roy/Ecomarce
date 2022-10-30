@@ -106,6 +106,6 @@ class WebsiteController extends Controller
    }
 
    public function CheckOutSuccess(){
-       dd('success');
+      return  view('forntend.ecommarce.invoice');
    }
 }

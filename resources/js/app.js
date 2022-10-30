@@ -47,6 +47,10 @@ Vue.component(
     "check-out",
     require("./components/product/CheckOut.vue").default
 );
+Vue.component(
+    "invoice",
+    require("./components/product/Invoice.vue").default
+);
 
 // Vue.component(
 //     "blog-list",

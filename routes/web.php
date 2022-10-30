@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FilaManagerController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UserRoleController;
+use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Product\BrandController;
 use App\Http\Controllers\Product\CategoryController;
@@ -50,6 +51,8 @@ Route::post('/checkout-confirm',[WebsiteController::class,'CheckoutConfirm'])->n
 Route::get('/wish-list', [WebsiteController::class, 'wishlist'])->name('website_wishlist');
 Route::get('/contact', [WebsiteController::class, 'contact'])->name('website_contact');
 Route::get('/learn-vue', [WebsiteController::class, 'vue'])->name('website_vue');
+
+Route::post('save_check_out_info',[CheckOutController::class,'check_out_info'])->name('save_check_out_info');
 
 Route::get('/checkout_success',[WebsiteController::class,'CheckOutSuccess'])->name('checkout_success');
 Route::get('/checkout_fail',function(){dd('fail');})->name('checkout_fail');
