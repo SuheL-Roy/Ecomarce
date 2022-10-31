@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WebsiteController extends Controller
 {
@@ -106,19 +109,35 @@ class WebsiteController extends Controller
       \Stripe\Stripe::setApiKey('sk_test_51LyIIcSEDmb2ml08OFS6DBtKzPGHyP2J7f2Gb87WRMHqVk9MjMPChO58GSNuD2AxVc9w56JdpDa6dXURjlAPCZzD00RjWO0mVn');
       header('Content-Type: application/json');
       $YOUR_DOMAIN = 'http://127.0.0.1:8000';
+      $orders = Order::where('user_id',Auth::user()->id)->orderBy('id','DESC')->with('order_products')->first();
+      $lineItems= [];
+       foreach ($orders->order_products as $order) {
+         $lineItems[] = [
+             'price_data' => [
+                 'currency' => 'usd',
+                 'product_data' => [
+                     'name' => $order->product_name,
+                     'images' => ["payment"],
+                 ],
+                 'unit_amount' => $order->price * 100,
+             ],
+             'quantity' => $order->qty,
+         ];
+     }
       $checkout_session = \Stripe\Checkout\Session::create([
-          'payment_method_types' => ['card'],
-          'line_items' => [[
-              'price_data' => [
-                  'currency' => 'usd',
-                  'unit_amount' => 2000,
-                  'product_data' => [
-                      'name' => 'Stubborn Attachments',
-                      'images' => ["https://i.imgur.com/EHyR2nP.png"]
-                  ],
-              ],
-              'quantity' => 1,
-          ]],
+         //  'payment_method_types' => ['card'],
+         //  'line_items' => [[
+         //      'price_data' => [
+         //          'currency' => 'usd',
+         //          'unit_amount' => 2000,
+         //          'product_data' => [
+         //              'name' => 'Stubborn Attachments',
+         //              'images' => ["https://i.imgur.com/EHyR2nP.png"]
+         //          ],
+         //      ],
+         //      'quantity' => 1,
+         //  ]],
+         'line_items'=>$lineItems,
           'mode' => 'payment',
           'success_url' => $YOUR_DOMAIN . '/checkout_success',
           'cancel_url' => $YOUR_DOMAIN . '/check-out',
@@ -128,6 +147,7 @@ class WebsiteController extends Controller
 
    public function CheckOutSuccess(){
       
+     
       return  view('forntend.ecommarce.invoice');
    }
 
