@@ -14,11 +14,13 @@ const state = {
      },
      invoice_id:'',
      invoice_date:'',
+     check_success: false,
 }
 const getters ={
    get_billing_address: state=>state.billing_address,
    get_invoice_id: state=>state.invoice_id,
-   get_invoice_date: state=>state.invoice_date
+   get_invoice_date: state=>state.invoice_date,
+   get_check_success: state=>state.check_success,
 }
 const actions = {
    save_checkout_information: function(state,checkout_information){
@@ -32,9 +34,6 @@ const actions = {
             invoice_date:res.data.invoice_date,
          })
       })
-     // console.log(checkout_information)
-     state.invoice_date = res.data.invoice_date;
-     state.invoice_id = res.data.invoice_id;
    }
      
 }
@@ -45,6 +44,9 @@ const mutations = {
    set_invoice_id_and_date: function(state,info){
       state.invoice_id = info.invoice_id;
       state.invoice_date = info.invoice_date;
+      state.check_success = true;
+      this.commit('reset_cart', null, { root:true });
+      this.dispatch('fetch_latest_card', null, { root:true });
    }
 }
 

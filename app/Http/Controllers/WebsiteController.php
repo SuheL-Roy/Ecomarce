@@ -81,7 +81,28 @@ class WebsiteController extends Controller
 
    public function  CheckoutConfirm()
    {
-
+    
+      // \Stripe\Stripe::setApiKey('sk_test_51LyIIcSEDmb2ml08OFS6DBtKzPGHyP2J7f2Gb87WRMHqVk9MjMPChO58GSNuD2AxVc9w56JdpDa6dXURjlAPCZzD00RjWO0mVn');
+      // header('Content-Type: application/json');
+      // $YOUR_DOMAIN = 'http://127.0.0.1:8000';
+      // $checkout_session = \Stripe\Checkout\Session::create([
+      //     'payment_method_types' => ['card'],
+      //     'line_items' => [[
+      //         'price_data' => [
+      //             'currency' => 'usd',
+      //             'unit_amount' => 2000,
+      //             'product_data' => [
+      //                 'name' => 'Stubborn Attachments',
+      //                 'images' => ["https://i.imgur.com/EHyR2nP.png"]
+      //             ],
+      //         ],
+      //         'quantity' => 1,
+      //     ]],
+      //     'mode' => 'payment',
+      //     'success_url' => $YOUR_DOMAIN . '/checkout_success',
+      //     'cancel_url' => $YOUR_DOMAIN . '/check-out',
+      // ]);
+      // echo json_encode(['id' => $checkout_session->id]);
       \Stripe\Stripe::setApiKey('sk_test_51LyIIcSEDmb2ml08OFS6DBtKzPGHyP2J7f2Gb87WRMHqVk9MjMPChO58GSNuD2AxVc9w56JdpDa6dXURjlAPCZzD00RjWO0mVn');
       header('Content-Type: application/json');
       $YOUR_DOMAIN = 'http://127.0.0.1:8000';
@@ -106,6 +127,9 @@ class WebsiteController extends Controller
    }
 
    public function CheckOutSuccess(){
+      
       return  view('forntend.ecommarce.invoice');
    }
+
+  
 }

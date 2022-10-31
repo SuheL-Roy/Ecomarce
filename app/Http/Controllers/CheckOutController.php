@@ -97,4 +97,11 @@ class CheckOutController extends Controller
 
        // return $request->all();
     }
+
+
+    public function latest_check_out_info(){
+         $order = Order::where('user_id',Auth::user()->id)->orderBy('id','DESC')->with('order_products')->first();
+
+        return $order;
+    }
 }

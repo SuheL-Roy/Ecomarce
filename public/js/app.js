@@ -2051,15 +2051,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
-    var checkout_information = {
-      cart: this.get_carts,
-      billing_address: this.get_billing_address,
-      sub_total: this.get_sub_total
-    };
-    this.save_checkout_information(checkout_information);
+    if (this.get_carts.length > 0) {
+      var checkout_information = {
+        cart: this.get_carts,
+        billing_address: this.get_billing_address,
+        sub_total: this.get_sub_total
+      };
+      this.save_checkout_information(checkout_information);
+      //console.log(this.get_check_success);
+    } else {
+      this.fetch_latest_card();
+    }
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['save_checkout_information'])),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['get_billing_address', 'get_carts', 'get_sub_total', 'get_selected_card', 'get_invoice_date', 'get_invoice_id']))
+  methods: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['save_checkout_information', 'fetch_latest_card'])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['reset_cart'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['get_billing_address', 'get_carts', 'get_sub_total', 'get_selected_card', 'get_invoice_date', 'get_invoice_id', 'get_check_success', 'get_latest_save_card']))
 });
 
 /***/ }),
@@ -2790,23 +2795,23 @@ var render = function render() {
     }
   }, [_c("table", {
     staticClass: "table table-hover"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.get_carts, function (cart, index) {
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.get_latest_save_card.order_products, function (cart, index) {
     return _c("tr", {
       key: index
     }, [_c("td", {
       staticClass: "text-center"
-    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(cart.product.name) + " ")]), _vm._v(" "), _c("td", {
+    }, [_vm._v(_vm._s(index + 1))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(cart.product_name) + " ")]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
     }, [_vm._v(_vm._s(cart.qty) + " ")]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
-    }, [_vm._v(" TK." + _vm._s(cart.product_price) + " ")]), _vm._v(" "), _c("td", {
+    }, [_vm._v(" TK." + _vm._s(cart.price) + " ")]), _vm._v(" "), _c("td", {
       staticClass: "text-right"
-    }, [_vm._v(" TK." + _vm._s(parseInt(cart.qty) * cart.product_price))])]);
+    }, [_vm._v(" TK." + _vm._s(parseInt(cart.qty) * cart.price))])]);
   }), 0)])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "pull-right m-t-30 text-right"
-  }, [_c("p", [_vm._v("Sub-Total amount: TK. " + _vm._s(_vm.get_sub_total))]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("h3", [_c("b", [_vm._v("Total :")]), _vm._v(" TK. " + _vm._s(_vm.get_sub_total))])]), _vm._v(" "), _c("div", {
+  }, [_c("p", [_vm._v("Sub-Total amount: TK. " + _vm._s(_vm.get_latest_save_card.subtotal))]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("h3", [_c("b", [_vm._v("Total :")]), _vm._v(" TK. " + _vm._s(_vm.get_latest_save_card.total))])]), _vm._v(" "), _c("div", {
     staticClass: "clearfix"
   }), _vm._v(" "), _c("hr"), _vm._v(" "), _vm._m(2)])])]);
 };
@@ -53688,7 +53693,8 @@ var state = {
     order_notes: ''
   },
   invoice_id: '',
-  invoice_date: ''
+  invoice_date: '',
+  check_success: false
 };
 var getters = {
   get_billing_address: function get_billing_address(state) {
@@ -53699,6 +53705,9 @@ var getters = {
   },
   get_invoice_date: function get_invoice_date(state) {
     return state.invoice_date;
+  },
+  get_check_success: function get_check_success(state) {
+    return state.check_success;
   }
 };
 var actions = {
@@ -53713,9 +53722,6 @@ var actions = {
         invoice_date: res.data.invoice_date
       });
     });
-    // console.log(checkout_information)
-    state.invoice_date = res.data.invoice_date;
-    state.invoice_id = res.data.invoice_id;
   }
 };
 var mutations = {
@@ -53725,6 +53731,13 @@ var mutations = {
   set_invoice_id_and_date: function set_invoice_id_and_date(state, info) {
     state.invoice_id = info.invoice_id;
     state.invoice_date = info.invoice_date;
+    state.check_success = true;
+    this.commit('reset_cart', null, {
+      root: true
+    });
+    this.dispatch('fetch_latest_card', null, {
+      root: true
+    });
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53751,7 +53764,8 @@ __webpack_require__.r(__webpack_exports__);
 var state = {
   sub_total: 0,
   carts: [],
-  Selected_cart: {}
+  Selected_cart: {},
+  latest_save_card: {}
 };
 var getters = {
   get_sub_total: function get_sub_total(state) {
@@ -53762,9 +53776,20 @@ var getters = {
   },
   get_selected_card: function get_selected_card(state) {
     return state.Selected_cart;
+  },
+  get_latest_save_card: function get_latest_save_card(state) {
+    return state.latest_save_card;
   }
 };
-var actions = {};
+var actions = {
+  fetch_latest_card: function fetch_latest_card(state) {
+    var _this = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('get_latest_check_out_info').then(function (res) {
+      console.log(res);
+      _this.commit('save_latest_save_card', res.data);
+    });
+  }
+};
 var mutations = {
   set_carts: function set_carts(state, cart) {
     var temp_cart = state.carts.filter(function (item) {
@@ -53802,9 +53827,15 @@ var mutations = {
       return total += item.product_price * item.qty;
     }, 0);
     // state.sub_total = state.carts.reduce((total,item) += item.product_price,0);
+  },
+
+  reset_cart: function reset_cart(state) {
+    state.sub_total = 0, state.carts = [], state.Selected_cart = {};
+  },
+  save_latest_save_card: function save_latest_save_card(state, info) {
+    state.latest_save_card = info;
   }
 };
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: state,
   getters: getters,

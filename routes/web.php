@@ -52,9 +52,10 @@ Route::get('/wish-list', [WebsiteController::class, 'wishlist'])->name('website_
 Route::get('/contact', [WebsiteController::class, 'contact'])->name('website_contact');
 Route::get('/learn-vue', [WebsiteController::class, 'vue'])->name('website_vue');
 
-Route::post('save_check_out_info',[CheckOutController::class,'check_out_info'])->name('save_check_out_info');
+Route::post('save_check_out_info',[CheckOutController::class,'check_out_info'])->name('save_check_out_info')->middleware('auth');
+Route::get('/get_latest_check_out_info',[CheckOutController::class,'latest_check_out_info'])->name('get_latest_check_out_info')->middleware('auth');
 
-Route::get('/checkout_success',[WebsiteController::class,'CheckOutSuccess'])->name('checkout_success');
+Route::get('/checkout_success',[WebsiteController::class,'CheckOutSuccess'])->name('checkout_success')->middleware('auth');
 Route::get('/checkout_fail',function(){dd('fail');})->name('checkout_fail');
 
 

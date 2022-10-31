@@ -51,12 +51,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(cart, index) in get_carts" :key="index">
+                            <tr v-for="(cart, index) in get_latest_save_card.order_products" :key="index">
                                 <td class="text-center">{{ index + 1 }}</td>
-                                <td>{{ cart.product.name }} </td>
+                                <td>{{ cart.product_name }} </td>
                                 <td class="text-right">{{ cart.qty }} </td>
-                                <td class="text-right"> TK.{{ cart.product_price }} </td>
-                                <td class="text-right"> TK.{{ parseInt(cart.qty) * cart.product_price }}</td>
+                                <td class="text-right"> TK.{{ cart.price }} </td>
+                                <td class="text-right"> TK.{{ parseInt(cart.qty) * cart.price }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -64,9 +64,9 @@
             </div>
             <div class="col-md-12">
                 <div class="pull-right m-t-30 text-right">
-                    <p>Sub-Total amount: TK. {{ get_sub_total }}</p>
+                    <p>Sub-Total amount: TK. {{ get_latest_save_card.subtotal }}</p>
                     <hr>
-                    <h3><b>Total :</b> TK. {{ get_sub_total }}</h3>
+                    <h3><b>Total :</b> TK. {{ get_latest_save_card.total }}</h3>
                 </div>
                 <div class="clearfix"></div>
                 <hr>
@@ -85,6 +85,7 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     created: function () {
+        if(this.get_carts.length > 0){
         let checkout_information = {
             cart: this.get_carts,
             billing_address: this.get_billing_address,
@@ -92,11 +93,19 @@ export default {
         }
 
         this.save_checkout_information(checkout_information);
+        //console.log(this.get_check_success);
+    }else{
+        this.fetch_latest_card();
+    }
     },
     methods: {
         ...mapActions([
-            'save_checkout_information'
+            'save_checkout_information',
+            'fetch_latest_card'
         ]),
+        ...mapMutations([
+            'reset_cart'
+        ])
 
     },
 
@@ -107,7 +116,9 @@ export default {
             'get_sub_total',
             'get_selected_card',
             'get_invoice_date',
-            'get_invoice_id'
+            'get_invoice_id',
+            'get_check_success',
+            'get_latest_save_card'
 
         ])
     }

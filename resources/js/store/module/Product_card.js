@@ -5,16 +5,23 @@ const state = {
     sub_total:0,
     carts:[],
     Selected_cart:{},
+    latest_save_card:{},
 
 }
 const getters ={
    get_sub_total: state=>state.sub_total, 
    get_carts: state=>state.carts,
-   get_selected_card: state=>state.Selected_cart
+   get_selected_card: state=>state.Selected_cart,
+   get_latest_save_card: state=>state.latest_save_card
   
 }
 const actions = {
-    
+   fetch_latest_card: function(state){
+      axios.get('get_latest_check_out_info').then((res)=>{
+           console.log(res);
+           this.commit('save_latest_save_card',res.data);
+      })
+    },
 }
 const mutations = {
    set_carts: function(state,cart){
@@ -44,6 +51,14 @@ const mutations = {
    calculate_cart_total: function(state,cart){
     state.sub_total = state.carts.reduce((total,item)=>total += (item.product_price * item.qty),0);
    // state.sub_total = state.carts.reduce((total,item) += item.product_price,0);
+   },
+   reset_cart:function(state){
+      state.sub_total= 0,
+      state.carts= [],
+      state.Selected_cart= {}
+   },
+   save_latest_save_card:function(state,info){
+      state.latest_save_card = info;
    }
 }
 
