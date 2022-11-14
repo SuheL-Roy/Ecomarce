@@ -2,7 +2,7 @@
 @section('content')
 <div class="main-container shop-bg">
     <div class="container">
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-12">
                 <div class="woocommerce-breadcrumb mtb-15">
                     <div class="menu">
@@ -245,8 +245,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
+        <category-product></category-product>
     </div>
 </div>
+
+{{-- @push('custom_js')
+<script src="{{ asset('contents/websites') }}/vue/Product.js"></script>
+@endpush --}}
 </div>
 @endsection

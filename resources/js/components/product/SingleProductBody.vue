@@ -23,13 +23,18 @@
                                 <a href="#" data-toggle="tooltip" title="Compare"><i class="fa fa-comments"></i></a>
                             </li>
                             <li>
-                                <a href="#" data-toggle="tooltip" @click.prevent="showModal(product)" title="View Product Details"><i class="fa fa-search"></i></a>
+                                <a href="#" data-toggle="tooltip" @click.prevent="showModal(product)"
+                                    title="View Product Details"><i class="fa fa-search"></i></a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="product-content home3-hover">
-                    <h3><a :href="'/products-details/' + product.id">{{ product.name }}</a></h3>
+                    <h3>
+                        <a :href="'/products-details/' + product.id">{{
+                                product.name
+                        }}</a>
+                    </h3>
                     <ul>
                         <li><i class="fa fa-star"></i></li>
                         <li><i class="fa fa-star"></i></li>
@@ -43,7 +48,6 @@
                         }}</span><span v-if="product.discount_price > 0">$ {{ product.discount
 }}</span>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -51,7 +55,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions,mapMutations } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
     created: function () {
         this.fetch_product_list();
@@ -59,13 +63,12 @@ export default {
 
     methods: {
         ...mapActions(["fetch_product_list"]),
-        ...mapMutations(['set_product_details']),
-        
-        showModal: function(products_details){
-          this.set_product_details(products_details);
-          $('#productViewModal').modal('show');
-        }
+        ...mapMutations(["set_product_details"]),
 
+        showModal: function (products_details) {
+            this.set_product_details(products_details);
+            $("#productViewModal").modal("show");
+        },
     },
     computed: {
         ...mapGetters(["get_product_list"]),
@@ -98,6 +101,5 @@ export default {
     text-align: center;
     line-height: 40px;
     z-index: 9;
-
 }
 </style>

@@ -41,6 +41,16 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+
+Route::get('/products/category/{main_category}/all-json', [WebsiteController::class,'main_category_products'])->name('website_main_category_products');
+Route::get('/products/category/{main_category}', [WebsiteController::class,'main_category_products_json'])->name('website_main_category_products_json');
+
+Route::get('/products/category/{main_category}/{category}',[WebsiteController::class,'category_products'])->name('website_category_products');
+Route::get('/products/category/{main_category}/{category}/all-product-json',[WebsiteController::class,'category_products_json'])->name('website_category_products_json');
+
+Route::get('/products/category/{main_category}/{category}/{sub_category}', [WebsiteController::class,'sub_category_products'])->name('website_sub_category_products');
+Route::get('/products/category/{main_category}/{category}/{sub_category}/all-product-json', [WebsiteController::class,'sub_category_products_json'])->name('website_sub_category_products_json');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [WebsiteController::class, 'index'])->name('website_index');
 Route::get('/products', [WebsiteController::class, 'products'])->name('website_products');
@@ -51,6 +61,7 @@ Route::post('/checkout-confirm',[WebsiteController::class,'CheckoutConfirm'])->n
 Route::get('/wish-list', [WebsiteController::class, 'wishlist'])->name('website_wishlist');
 Route::get('/contact', [WebsiteController::class, 'contact'])->name('website_contact');
 Route::get('/learn-vue', [WebsiteController::class, 'vue'])->name('website_vue');
+Route::get('/all-category', [WebsiteController::class, 'allCategory'])->name('website_vue');
 
 Route::post('save_check_out_info',[CheckOutController::class,'check_out_info'])->name('save_check_out_info')->middleware('auth');
 Route::get('/get_latest_check_out_info',[CheckOutController::class,'latest_check_out_info'])->name('get_latest_check_out_info')->middleware('auth');

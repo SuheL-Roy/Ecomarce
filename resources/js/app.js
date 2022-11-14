@@ -51,6 +51,10 @@ Vue.component(
     "invoice",
     require("./components/product/Invoice.vue").default
 );
+Vue.component(
+    "category-product",
+    require("./components/product/CategoryProduct.vue").default
+);
 
 // Vue.component(
 //     "blog-list",

@@ -10,4 +10,8 @@ class Size extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function related_product(){
+        return $this->belongsToMany(Product::class);
+    }
 }

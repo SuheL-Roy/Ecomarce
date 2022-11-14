@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\color;
+use App\Models\MainCategory;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
+use App\Models\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class WebsiteController extends Controller
 {
@@ -22,6 +26,7 @@ class WebsiteController extends Controller
       return $collection;
    }
 
+   
    public function search_product_json(Request $request, $limit, $key)
    {
       $collection = Product::where('name', $key)
@@ -34,6 +39,117 @@ class WebsiteController extends Controller
       return $collection;
    }
 
+
+   public $main_category_id, $category_id;
+   public function main_category_products_json(Request $request,$main_category){
+      $main_category = MainCategory::where('slug', $main_category)->first();
+
+      if ($main_category) {
+          $this->main_category_id = $main_category->id;
+          if ($request->has('range')) {
+              $range = str_replace('$', '', $request->range);
+              $range = explode('-', $range);
+              $min = (int) $range[0];
+              $max = (int) $range[1];
+              $products = $main_category->related_product()->whereBetween('price', [$min, $max])->with([
+                  'category',
+                  'sub_category',
+                  'main_category',
+                  'color',
+                  'image',
+                  'publication',
+                  'size',
+                  'unit',
+                  'writer',
+              ])->orderBy('price', 'DESC')->paginate(10);
+          }
+          else if($request->has('size')){
+              $this->size = (int) $request->size;
+              $products = $main_category->related_product()->with([
+                  'category',
+                  'sub_category',
+                  'main_category',
+                  'color',
+                  'image',
+                  'publication',
+                  'size',
+                  'unit',
+                  'writer',
+              ])->whereExists(function ($query) {
+                  $query->select(DB::raw(1))
+                      ->from('product_size')
+                      ->whereRaw('product_size.product_id = products.id')
+                      ->where('product_size.size_id',$this->size);
+              })->orderBy('id', 'DESC')->paginate(10);
+
+          }
+          else if($request->has('color')){
+              $this->color = (int) $request->color;
+              $products = $main_category->related_product()->with([
+                  'category',
+                  'sub_category',
+                  'main_category',
+                  'color',
+                  'image',
+                  'publication',
+                  'size',
+                  'unit',
+                  'writer',
+              ])->whereExists(function ($query) {
+                  $query->select(DB::raw(1))
+                      ->from('color_product')
+                      ->whereRaw('color_product.product_id = products.id')
+                      ->where('color_product.color_id',$this->color);
+              })->orderBy('id', 'DESC')->paginate(10);
+          }
+          else {
+              $products = $main_category->related_product()->with([
+                  'category',
+                  'sub_category',
+                  'main_category',
+                  'color',
+                  'image',
+                  'publication',
+                  'size',
+                  'unit',
+                  'writer',
+              ])->orderBy('id', 'DESC')->paginate(8);
+
+              $sizes = Size::where('status',1)->select(['name','id'])->get();
+              foreach ($sizes as $key => $item) {
+                  $count = $item->related_product()->whereExists(function ($query) {
+                                  $query->select(DB::raw(1))
+                                      ->from('main_category_product')
+                                      ->whereRaw('main_category_product.product_id = products.id')
+                                      ->where('main_category_product.main_category_id',$this->main_category_id);
+                              })->count();
+                  $item->product_amount = $count;
+              }
+
+              $colors = color::where('status',1)->select(['name','id'])->get();
+              foreach ($colors as $key => $item) {
+                  $count = $item->related_product()->whereExists(function ($query) {
+                                  $query->select(DB::raw(1))
+                                      ->from('main_category_product')
+                                      ->whereRaw('main_category_product.product_id = products.id')
+                                      ->where('main_category_product.main_category_id',$this->main_category_id);
+                              })->count();
+                  $item->product_amount = $count;
+              }
+
+              return response()->json([
+                  'products' => $products,
+                  'sizes' => $sizes,
+                  'colors' => $colors,
+              ]);
+          }
+          return $products;
+      } else {
+          return [];
+      }
+      
+   }
+
    public function vue()
    {
       return view('learn-vue');
@@ -41,6 +157,17 @@ class WebsiteController extends Controller
 
    public function products()
    {
+      return view('forntend.ecommarce.products');
+   }
+
+   public function main_category_products(){
+      return view('forntend.ecommarce.products');
+   }
+   public function category_products(){
+      return view('forntend.ecommarce.products');
+   }
+
+   public function sub_category_products(){
       return view('forntend.ecommarce.products');
    }
 
@@ -151,5 +278,15 @@ class WebsiteController extends Controller
       return  view('forntend.ecommarce.invoice');
    }
 
+
+   public function allCategory(){
+   //   $all_category = MainCategory::orderBy('sequence','ASC')->with('related_categories')->get();  
+
+   //   return $all_category;
+     $category = MainCategory::where('status', 1)->with('related_categories')->withCount('related_product')->get();
+     return $category;
+
+    // return view('forntend.ecommarce.layouts.menu_sidebar',compact('all_category'));
+   }
   
 }

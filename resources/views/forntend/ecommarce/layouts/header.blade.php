@@ -406,13 +406,16 @@
     </div>
    </div>
     <script src="/js/app.js"></script>
+    <script src="{{ asset('contents/admin') }}/custom.js"></script>
+    {{-- <script src="{{ asset('contents/admin') }}/product_vue.js"></script> --}}
     <!-- Placed js at the end of the document so the pages load faster -->
     <!-- jquery latest version -->
     {{-- <script src="{{ asset('contents/websites') }}/js/vendor/jquery-1.12.4.min.js"></script> --}}
-    <!-- Popper js -->
-    <script src="{{ asset('contents/websites') }}/js/popper.js"></script>
+    <!-- Popper js --> 
+    <script src="{{ asset('contents/websites') }}/js/popper.js"><script/>
+    // <script src="{{ asset('contents/admin') }}/product_vue.js"></script>
     <!-- Bootstrap framework js -->
-    <script src="{{ asset('contents/websites') }}/js/bootstrap.min.js"></script>
+    <script src="{{ asset('contents/websites') }}/js/bootstrap.min.js"></script>    
     <!-- magnific popup js -->
     <script src="{{ asset('contents/websites') }}/js/jquery.magnific-popup.min.js"></script>
     <!-- mixitup js -->
@@ -433,6 +436,10 @@
     <script src="{{ asset('contents/websites') }}/js/plugins.js"></script>
     <!-- Main js file that contents all jQuery plugins activation. -->
     <script src="{{ asset('contents/websites') }}/js/main.js"></script>
+
+
+    @stack('custom_js')
+
 </body>
 
 <!-- Mirrored from demo.hasthemes.com/oneclick-preview/oneclick/index-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 01 Mar 2021 10:49:54 GMT -->

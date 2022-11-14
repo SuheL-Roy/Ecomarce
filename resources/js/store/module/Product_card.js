@@ -46,11 +46,11 @@ const mutations = {
      });
      product.qty = product_info.qty;
       this.commit('calculate_cart_total');
-    // console.log(product_info.qty);
+    
    },
    calculate_cart_total: function(state,cart){
     state.sub_total = state.carts.reduce((total,item)=>total += (item.product_price * item.qty),0);
-   // state.sub_total = state.carts.reduce((total,item) += item.product_price,0);
+   
    },
    reset_cart:function(state){
       state.sub_total= 0,

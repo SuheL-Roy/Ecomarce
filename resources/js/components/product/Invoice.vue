@@ -22,7 +22,7 @@
                         <h4 class="font-bold">{{ get_billing_address.name }}</h4>
                         <p class="text-muted m-l-30">
                             {{ get_billing_address.address }},<br>
-                            {{ get_billing_address.address1 }},<br>
+                            {{ get_billing_address.address2 }},<br>
                             {{ get_billing_address.town }},<br>
                             {{ get_billing_address.state }},<br>
                             {{ get_billing_address.phone }},<br>
