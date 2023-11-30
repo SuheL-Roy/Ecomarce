@@ -10,8 +10,9 @@
                 <p class="mb-0 "><strong>134</strong> Sales</p>
                 <p class="mb-0  fw-bold">
                     <span class="me-2 text-decoration-line-through"><del>${{ $product->price }}</del></span>
-                    <span class="text-white">${{ Helper::discount_price($product->price, $product->discount_price) }}</span>
-                    
+                    {{-- <span
+                        class="text-white">${{ Helper::discount_price($product->price, $product->discount_price) }}</span> --}}
+
                 </p>
             </div>
             <div class="d-flex align-items-center mt-3 fs-6">
@@ -28,8 +29,9 @@
         <div class="card-footer">
             <ul class="d-flex flex-wrap justify-content-end">
                 {{-- <li><a href="{{ route('product.edit',$product->id) }}" class="btn btn-sm btn-success ml-2">Edit</a></li> --}}
-                <li><a href="{{ route('product.show',$product->id) }}" class="btn btn-sm btn-warning ml-2">View</a></li>
-                <li><a href="{{ route('product.destroy',$product->id) }}" data-parent=".admin_product_individual_body" class="btn destroy_btn btn-sm btn-danger ml-2">Delete</a></li>
+                <li><a href="{{ route('product.show', $product->id) }}" class="btn btn-sm btn-warning ml-2">View</a></li>
+                <li><a href="{{ route('product.destroy', $product->id) }}" data-parent=".admin_product_individual_body"
+                        class="btn destroy_btn btn-sm btn-danger ml-2">Delete</a></li>
             </ul>
         </div>
     </div>
